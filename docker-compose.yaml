@@ -1,0 +1,23 @@
+version: '3.9'
+services:
+  speakease-frontend:
+    build: .
+    image: speakease:v1
+    container_name: speakease-frontend
+    ports:
+      - "3020:3000"
+    environment:
+      - MONGODB_AUTH_URI=mongodb://speakease-mongo:27017/authdb
+      - MONGODB_FEEDBACK_URI=mongodb://speakease-mongo:27017/feedbackDB
+    depends_on:
+      - speakease-mongo
+
+  speakease-mongo:
+    image: mongo:latest
+    container_name: speakease-mongo
+    ports:
+      - "27025:27017"
+    volumes:
+      - ./data:/data/db
+
+    
